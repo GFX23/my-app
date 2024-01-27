@@ -1,52 +1,50 @@
 module.exports = {
-    env: {
-        "browser": true,
-        "es2021": true
-    },
-    extends: [
-        "eslint:recommended",
-        "eslint-config-next",
-        "plugin:@typescript-eslint/recommended",
-        "plugin:react/recommended",
-        "airbnb",
+	env: {
+		browser: true,
+		es2021: true,
+	},
+	extends: [
+		"eslint:recommended",
+		"eslint-config-next",
+		"plugin:@typescript-eslint/recommended",
+		"airbnb",
+		"prettier",
 		"airbnb-typescript",
 		"airbnb/hooks",
-    ],
-    overrides: [
-        {
-            "env": {
-                "node": true
-            },
-            "files": [
-                ".eslintrc.js"
-            ],
-            "parserOptions": {
-                "sourceType": "script"
-            }
-        }
-    ],
-    parser: "@typescript-eslint/parser",
-    parserOptions: {
+	],
+	overrides: [
+		{
+			env: {
+				node: true,
+			},
+			files: [".eslintrc.js"],
+			parserOptions: {
+				sourceType: "script",
+			},
+		},
+	],
+	parser: "@typescript-eslint/parser",
+	parserOptions: {
 		project: ["./tsconfig.json"],
 		ecmaFeatures: {
 			jsx: true,
 		},
 		ecmaVersion: "latest",
 		sourceType: "module",
-    },
-    plugins: [
-        "@typescript-eslint",
-        "react"
-    ],
-    rules: {
-        "react/function-component-definition": [
+	},
+	plugins: ["@typescript-eslint", "react", "prettier"],
+	rules: {
+		"react/react-in-jsx-scope": "off",
+		"import/prefer-default-export": ["off", { target: "any" }],
+		"import/no-default-export": 2,
+		"react/function-component-definition": [
 			2,
 			{
 				namedComponents: "arrow-function",
 				unnamedComponents: "arrow-function",
 			},
 		],
-        "import/order": [
+		"import/order": [
 			"error",
 			{
 				"newlines-between": "always",
@@ -54,11 +52,12 @@ module.exports = {
 				alphabetize: { order: "asc" },
 			},
 		],
-        "no-console": ["error", { allow: ["error", "debug"] }],
-        "@typescript-eslint/no-var-requires": "error",
+		"no-console": ["error", { allow: ["error", "debug"] }],
+		"@typescript-eslint/no-var-requires": "error",
 		"@typescript-eslint/no-explicit-any": "warn",
 		"@typescript-eslint/no-unused-vars": "warn",
-        "@typescript-eslint/naming-convention": [
+		"react/prop-types": "off",
+		"@typescript-eslint/naming-convention": [
 			"warn",
 			{
 				selector: "variable",
@@ -67,25 +66,30 @@ module.exports = {
 				leadingUnderscore: "allowDouble",
 			},
 		],
-        "indent": [
-            "error",
-            2,
-        ],
-        "linebreak-style": [
-            "error",
-            "unix"
-        ],
-        "quotes": [
-            "error",
-            "double"
-        ],
-        "semi": [
-            "error",
-            "always"
-        ]
-    },
-    ignorePatterns: [
-		".eslintrc.js",
-		"node_modules/"
+		"@typescript-eslint/quotes": ["error", "double"],
+		semi: ["error", "always"],
+	},
+	ignorePatterns: [".eslintrc.js", "node_modules/"],
+	overrides: [
+		{
+			// COMMENT - nextjs app dir special components must have default export
+			files: [
+				"page.tsx",
+				"layout.tsx",
+				"loading.tsx",
+				"error.tsx",
+				"logger.ts",
+				"next.config.js",
+				"tailwind.config.ts",
+				"prettier.config.js",
+				"global.d.ts",
+				"not-found.tsx",
+				"template.tsx",
+			],
+			rules: {
+				"import/no-default-export": "off",
+				"import/prefer-default-export": ["error", { target: "any" }],
+			},
+		},
 	],
 };
