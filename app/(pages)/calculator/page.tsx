@@ -1,13 +1,11 @@
-import React from 'react';
-import { NextPage } from 'next';
+import { NextPage } from "next";
+import React from "react";
 
-const Calculator: NextPage = () => {
-  return (
-    <div>
-      <h1>Calculator Page</h1>
-      <p>This is a basic calculator page.</p>
-    </div>
-  );
-};
+const Calculator: NextPage = () => (
+  <div>
+    <h1>Calculator Page</h1>
+    <p>This is a basic calculator page.</p>
+  </div>
+);
 
 export default Calculator;
