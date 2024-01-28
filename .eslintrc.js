@@ -34,9 +34,11 @@ module.exports = {
 	},
 	plugins: ["@typescript-eslint", "react", "prettier"],
 	rules: {
+		"@typescript-eslint/indent": "off",
 		"react/react-in-jsx-scope": "off",
 		"import/prefer-default-export": ["off", { target: "any" }],
 		"import/no-default-export": 2,
+		"import/no-extraneous-dependencies": "off",
 		"react/function-component-definition": [
 			2,
 			{
@@ -52,7 +54,7 @@ module.exports = {
 				alphabetize: { order: "asc" },
 			},
 		],
-		"no-console": ["error", { allow: ["error", "debug"] }],
+		"no-console": ["warn", { allow: ["error"] }],
 		"@typescript-eslint/no-var-requires": "error",
 		"@typescript-eslint/no-explicit-any": "warn",
 		"@typescript-eslint/no-unused-vars": "warn",
