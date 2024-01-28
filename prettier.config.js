@@ -1,8 +1,7 @@
 const config = {
-  tabWidth: 2,
-  printWidth: 100,
-  useTabs: true,
-  eslintIntegration: true,
+	tabWidth: 2,
+	printWidth: 100,
+	useTabs: true,
 };
 
 export default config;
