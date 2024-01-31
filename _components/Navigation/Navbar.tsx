@@ -10,7 +10,7 @@ export const Navbar: React.FC = () => (
 				<NavLink href={MAIN_ROUTES.CALCULATOR} label="Calculator" />
 				<NavLink href={MAIN_ROUTES.EXPENSES} label="Expenses" />
 				<NavLink href={MAIN_ROUTES.BLOG} label="Blog" />
-				<NavLink href={MAIN_ROUTES.LOGIN} label="Login" />
+				<NavLink href={MAIN_ROUTES.GITHUB_LOGIN} label="Login" />
 			</ul>
 		</nav>
 	</div>

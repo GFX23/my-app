@@ -1,0 +1,63 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("POSTGRES_PRISMA_URL")
+}
+
+model User {
+  id        Int      @id @default(autoincrement())
+  firstName String   @db.VarChar(255)
+  lastName  String   @db.VarChar(255)
+  email     String   @unique @db.VarChar(255)
+  password  String   @db.VarChar(255)
+  createdAt DateTime @default(now())
+  avatar    String?  @db.VarChar(255)
+  updatedAt DateTime
+  deleted   Boolean  @default(false)
+}
+
+model Runner {
+  id             Int      @id @default(autoincrement())
+  name           String   @db.VarChar(255)
+  type           String   @db.VarChar(255)
+  customer       Customer @relation(fields: [customerId], references: [id])
+  customerId     Int      @unique
+  Da             Int      @default(0)
+  Ba             Int      @default(0)
+  Z              Int      @default(0)
+  Ra             Int      @default(0)
+  hourRate       Int      @default(0)
+  timeEstimate   Int      @default(0)
+  hoursRealy     Int      @default(0)
+  matIncluded    Boolean  @default(false)
+  matSpec        String   @db.VarChar(255)
+  matWeight      Int      @default(0)
+  millingPrice   Int      @default(0)
+  matPricePerKg  Int      @default(0)
+  materialPrice  Int      @default(0)
+  machiningHours Int      @default(0)
+  lathePrice     Int      @default(0)
+  edmPrice       Int      @default(0)
+  grindingPrice  Int      @default(0)
+  balancingPrice Int      @default(0)
+  testsPrice     Int      @default(0)
+  priceTotal     Int      @default(0)
+  comment        String?  @db.VarChar(255)
+  attachment     String?  @db.VarChar(255)
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime
+}
+
+model Customer {
+  id        Int      @id @default(autoincrement())
+  name      String   @db.VarChar(255)
+  address   String   @db.VarChar(255)
+  phone     String   @db.VarChar(255)
+  email     String   @db.VarChar(255)
+  createdAt DateTime @default(now())
+  updatedAt DateTime
+  Runner    Runner?
+}
