@@ -1,5 +1,10 @@
-import { PrismaClient } from "@prisma/client";
+"use server";
 
-const prisma = new PrismaClient();
+import { prisma } from "./prisma";
 
-
+export const getUser = async (email: string) =>
+	prisma.user.findUnique({
+		where: {
+			email,
+		},
+	});

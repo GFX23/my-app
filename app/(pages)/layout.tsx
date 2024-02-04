@@ -1,7 +1,9 @@
 import type { Metadata } from "next";
 
 import "../globals.css";
+import "react-toastify/dist/ReactToastify.css";
 import { Navbar } from "../../_components/Navigation/Navbar";
+import { auth } from "@/auth";
 
 export const metadata: Metadata = {
 	title: "Welcome to GFX23's personal website",
@@ -13,7 +15,7 @@ const RootLayout = async ({
 }: Readonly<{
 	children: React.ReactNode;
 }>) => {
-	const hello = "Hello";
+	const session = await auth();
 
 	return (
 		<html lang="en">

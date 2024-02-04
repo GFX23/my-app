@@ -1,7 +1,7 @@
 import { NextPage } from "next";
 import React from "react";
 
-import { auth } from "@/auth";
+import { auth } from "@/auth.config";
 
 const Blog: NextPage = async () => {
 	const session = await auth();

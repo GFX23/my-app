@@ -1,8 +1,5 @@
 module.exports = {
-	env: {
-		browser: true,
-		es2021: true,
-	},
+	root: true,
 	extends: [
 		"eslint:recommended",
 		"eslint-config-next",
@@ -46,6 +43,7 @@ module.exports = {
 				unnamedComponents: "arrow-function",
 			},
 		],
+		"import/no-cycle": "off",
 		"import/order": [
 			"error",
 			{
@@ -58,6 +56,7 @@ module.exports = {
 		"@typescript-eslint/no-var-requires": "error",
 		"@typescript-eslint/no-explicit-any": "warn",
 		"@typescript-eslint/no-unused-vars": "warn",
+		"@typescript-eslint/no-unused-expressions": "off",
 		"react/prop-types": "off",
 		"@typescript-eslint/naming-convention": [
 			"warn",

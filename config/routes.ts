@@ -13,5 +13,5 @@ export enum MAIN_ROUTES {
 	BLOG = "/blog",
 	HOME = "/",
 	LOGIN = "/login",
-	GITHUB_LOGIN = "/api/auth/callback/github",
+	TEST = "/test",
 }
