@@ -10,9 +10,6 @@
 
 @layer base {
 	.flex-row-center {
-		display: flex;
-		flex-direction: row;
-		align-items: center;
-		justify-content: center;
+		@apply flex flex-row items-center justify-center gap-2;
 	}
 }

@@ -36,6 +36,7 @@ module.exports = {
 		"import/prefer-default-export": ["off", { target: "any" }],
 		"import/no-default-export": 2,
 		"import/no-extraneous-dependencies": "off",
+		"react/jsx-props-no-spreading": "off",
 		"react/function-component-definition": [
 			2,
 			{

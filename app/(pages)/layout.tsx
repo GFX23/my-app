@@ -1,8 +1,9 @@
 import type { Metadata } from "next";
 
-import "../globals.css";
+import "../../styles/globals.css";
 import "react-toastify/dist/ReactToastify.css";
-import { Navbar } from "../../_components/Navigation/Navbar";
+import { Navbar } from "../_components/Navigation/Navbar";
+import { SideTitle } from "../_components/Navigation/SideTitle";
 import { auth } from "@/auth";
 
 export const metadata: Metadata = {
@@ -19,9 +20,12 @@ const RootLayout = async ({
 
 	return (
 		<html lang="en">
-			<body className="bg-secondary-8 text-secondary-05">
+			<body className="bg-secondary-10 text-secondary-05 h-screen w-screen flex flex-col">
 				<Navbar />
-				{children}
+				<div className="flex flex-row w-full h-full">
+					<SideTitle />
+					{children}
+				</div>
 			</body>
 		</html>
 	);

@@ -16,5 +16,5 @@ export const authConfig = {
 		// @ts-ignore
 		session: async ({ session, token }) => ({ ...session, user: token.user }),
 	},
-	providers: [], 
+	providers: [],
 } satisfies NextAuthConfig;

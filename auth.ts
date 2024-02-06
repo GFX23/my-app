@@ -1,3 +1,5 @@
+"use server";
+
 import { User } from "@prisma/client";
 import NextAuth from "next-auth";
 import Credentials from "next-auth/providers/credentials";
@@ -7,7 +9,7 @@ import { authConfig } from "./auth.config";
 import { getUser } from "./db/select";
 import { validatePassword } from "./lib/actions";
 
-export const { auth, signIn, signOut, handlers } = NextAuth({
+export const { auth, signIn, signOut } = NextAuth({
 	...authConfig,
 	providers: [
 		// Github to be added
@@ -28,7 +30,6 @@ export const { auth, signIn, signOut, handlers } = NextAuth({
 					if (await validatePassword(password, user.password)) return user;
 					return null;
 				}
-
 				return null;
 			},
 		}),

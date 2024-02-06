@@ -5,9 +5,7 @@ import { ToastContainer, toast } from "react-toastify";
 
 import { deleteUser } from "@/db/delete";
 import { insertUser } from "@/db/insert";
-import { getUser } from "@/db/select";
 import { authenticate } from "@/lib/actions";
-
 
 export const LoginForm = () => {
 	const [input, setInput] = useState({ email: "", password: "" });
@@ -16,14 +14,13 @@ export const LoginForm = () => {
 
 	const handleSubmit = async () => {
 		try {
-			const user = await getUser(input.email);
-			console.log(user);
 			const response = await authenticate(input);
-			if (response) {
-				console.log(response);
+			if (response === "Success!") {
+				toast.success("Logged In");
 			}
 		} catch (error) {
 			console.error(error);
+			toast.error("Error logging in");
 		}
 	};
 
@@ -45,7 +42,6 @@ export const LoginForm = () => {
 		}
 	};
 
-
 	const handleCreateUser = async () => {
 		try {
 			const user = await insertUser(userInput);
@@ -57,13 +53,12 @@ export const LoginForm = () => {
 		}
 	};
 
-
 	return (
 		<div className="flex flex-col items-center justify-center rounded-lg px-6 pb-4 pt-8">
 			<h1>Please log in to continue.</h1>
 			<div className="w-96">
 				<div>
-						Email
+					Email
 					<div className="relative">
 						<input
 							className="peer block w-full rounded-md border border-gray-200 py-[9px] pl-10 text-sm outline-2 placeholder:text-gray-500"
@@ -77,7 +72,7 @@ export const LoginForm = () => {
 					</div>
 				</div>
 				<div className="mt-4">
-						Password
+					Password
 					<div className="relative">
 						<input
 							className="peer block w-full rounded-md border border-gray-200 py-[9px] pl-10 text-sm outline-2 placeholder:text-gray-500"
@@ -96,11 +91,11 @@ export const LoginForm = () => {
 			<button type="button" className="mt-4 w-full" onClick={handleSubmit}>
 				Log in
 			</button>
-			<button  type="button" className="mt-4 w-full" onClick={handleDeleteUser}>
+			<button type="button" className="mt-4 w-full" onClick={handleDeleteUser}>
 				Delete User
 			</button>
 			<ToastContainer />
-			<button  type="button" className="mt-4 w-full" onClick={handleCreateUser}>
+			<button type="button" className="mt-4 w-full" onClick={handleCreateUser}>
 				Create User
 			</button>
 			<div className="flex h-8 items-end space-x-1" aria-live="polite" aria-atomic="true" />

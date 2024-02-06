@@ -3,16 +3,16 @@
 import { compare } from "bcrypt-ts";
 import { AuthError } from "next-auth";
 
+// import secretData from "../data/data.json";
 import { signIn } from "auth";
 
 export async function authenticate(data: { email: string; password: string }) {
 	try {
 		const res = await signIn("credentials", data);
-		console.log("User is authenticated");
-		return res;
+		return "Success!";
 	} catch (error) {
 		if (error instanceof AuthError) {
-			console.log("Error:", error);
+			console.debug("Error:", error);
 			switch (error.type) {
 				case "CredentialsSignin":
 					return "Invalid credentials.";
@@ -29,6 +29,11 @@ export const validatePassword = async (password: string, hashedPassword: string)
 	if (!result) {
 		throw new Error("Invalid password");
 	}
-	console.log("Password is valid");
 	return result;
 };
+
+// export const fillDB = async () => {
+// 	secretData.forEach(async (item) => {
+// 		console.debug("Item:", item);
+// 	});
+// };
