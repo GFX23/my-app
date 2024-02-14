@@ -12,7 +12,7 @@ const MainLayout = async ({
 }: Readonly<{
 	children: React.ReactNode;
 }>) => (
-	<div className="flex-row-center h-full">
+	<div className="flex w-full h-full gap-2">
 		<CalcSideBar />
 		{children}
 	</div>

@@ -8,7 +8,22 @@
 	}
 }
 
+@layer components {
+}
+
 @layer base {
+	.screen-layout {
+		@apply bg-primary-10 text-primary-3 h-screen w-screen flex flex-col p-2;
+	}
+
+	.container {
+		@apply flex border-[1px] border-primary-5 rounded-md;
+	}
+
+	.header {
+		@apply flex items-center justify-between bg-primary-8 p-1 rounded-t-md border-b-[1px] border-primary-5;
+	}
+
 	.flex-row-center {
 		@apply flex flex-row items-center justify-center gap-2;
 	}

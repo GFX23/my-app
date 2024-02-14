@@ -1,6 +1,6 @@
 "use server";
 
-import { prisma } from "./prisma";
+import { prisma } from "../prisma/prisma";
 
 export const getUser = async (email: string) =>
 	prisma.user.findUnique({
@@ -8,3 +8,12 @@ export const getUser = async (email: string) =>
 			email,
 		},
 	});
+
+export const getAllRunners = async () => {
+	const runners = await prisma.runner.findMany({
+		where: {
+			type: "pelton",
+		},
+	});
+	return runners;
+};

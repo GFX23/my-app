@@ -9,8 +9,8 @@ export const Avatar: FP<Props> = ({ src, alt }) => (
 	<Image
 		src={src}
 		alt={alt}
-		width={40}
-		height={40}
+		width={32}
+		height={32}
 		className="rounded-full border-2 border-white"
 	/>
 );

@@ -3,7 +3,7 @@
 import { User } from "@prisma/client";
 import { hash, genSaltSync } from "bcrypt-ts";
 
-import { prisma } from "./prisma";
+import { prisma } from "../prisma/prisma";
 
 export const insertUser = async ({
 	firstName,
@@ -25,4 +25,36 @@ export const insertUser = async ({
 		},
 	});
 	return newUser;
+};
+
+type RunnerData = {
+	name: string;
+	order: string;
+	type: string;
+	customer: string;
+	Da: number;
+	Ba: number;
+	Z: number;
+	edmPrice: number;
+	priceTotal: number;
+	hourRate: number;
+	hoursRealy: number;
+	matIncluded: boolean;
+	matSpec: string;
+	matWeight: number;
+	millingPrice: number;
+	matPricePerKg: number;
+	materialPrice: number;
+	machiningHours: number;
+	lathePrice: number;
+	grindingPrice: number;
+	balancingPrice: number;
+	testsPrice: number;
+};
+
+export const insertRunners = async (data: RunnerData[]) => {
+	const newRunner = await prisma.runner.createMany({
+		data: [...data],
+	});
+	return newRunner;
 };

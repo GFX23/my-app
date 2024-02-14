@@ -1,20 +1,48 @@
+"use client";
+
+import { Runner } from "@prisma/client";
 import { NextPage } from "next";
-import React from "react";
+import React, { useState } from "react";
 
-// import { fillDB } from "@/lib/actions";
+import { Button } from "@/app/_components/Button";
+import { RunnerCard } from "@/app/_components/RunnerCard";
+import { RunnerItem } from "@/app/_components/RunnerItem";
+import { THRESHOLD } from "@/config/settings";
+import { getAllRunners } from "@/db/select";
 
-const Calculator: NextPage = async () => {
+const Calculator: NextPage = () => {
+	const [loading, setLoading] = useState(false);
+	const [runners, setRunners] = useState<Runner[]>([]);
+
 	const handleClick = async () => {
-		// await fillDB(); 
+		try {
+			setLoading(true);
+			const data = await getAllRunners();
+			setRunners(data.slice(0, 10));
+		} catch (error) {
+			console.error(error);
+		} finally {
+			setTimeout(() => {
+				setLoading(false);
+				console.log("finally");
+			}, THRESHOLD);
+		}
+
+		const data = await getAllRunners();
+		setRunners(data.slice(0, 10));
 	};
 
 	return (
-		<div className="w-full">
-			<h1>Calculator Page</h1>
-			<p>This is a basic calculator page.</p>
-			<button type="button" onClick={handleClick}>
-				Fill DB
-			</button>
+		<div className="w-full flex flex-col gap-2">
+			<RunnerCard />
+			<Button onClick={handleClick} loading>
+				GET RUNNERS
+			</Button>
+			<div className="flex flex-col gap-2">
+				{runners.map((runner: Runner) => (
+					<RunnerItem key={runner.id} runner={runner} setRunners={setRunners} />
+				))}
+			</div>
 		</div>
 	);
 };

@@ -10,11 +10,10 @@ export const Navbar: React.FC = async () => {
 	console.debug(session);
 
 	return (
-		<div className="flex flex-row justify-between px-10 py-5 border-b-[1px]">
+		<div className="container justify-between items-center mb-2 p-2 max-w-full">
 			<h1>Navbar</h1>
 			<nav>
 				<ul className="flex flex-row gap-4 items-center">
-					<li>ME: {session ? session?.user?.email : "No user"}</li>
 					<NavLink href={MAIN_ROUTES.HOME} label="Home" />
 					<NavLink href={MAIN_ROUTES.TEST} label="Test page" />
 					<NavLink href={MAIN_ROUTES.BLOG} label="Blog" />
@@ -22,6 +21,7 @@ export const Navbar: React.FC = async () => {
 						<>
 							<NavLink href={MAIN_ROUTES.CALCULATOR} label="Calculator" />
 							<NavLink href={MAIN_ROUTES.EXPENSES} label="Expenses" />
+							<li>ME: {session ? session?.user?.email : "No user"}</li>
 							<Avatar src={session?.user?.avatar || "/favicon"} alt="avatar of user" />
 						</>
 					) : (

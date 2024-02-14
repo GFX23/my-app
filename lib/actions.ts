@@ -3,7 +3,6 @@
 import { compare } from "bcrypt-ts";
 import { AuthError } from "next-auth";
 
-// import secretData from "../data/data.json";
 import { signIn } from "auth";
 
 export async function authenticate(data: { email: string; password: string }) {
@@ -31,9 +30,3 @@ export const validatePassword = async (password: string, hashedPassword: string)
 	}
 	return result;
 };
-
-// export const fillDB = async () => {
-// 	secretData.forEach(async (item) => {
-// 		console.debug("Item:", item);
-// 	});
-// };

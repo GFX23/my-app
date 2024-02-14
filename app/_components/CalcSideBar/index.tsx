@@ -7,7 +7,7 @@ export const CalcSideBar = () => {
 	const helo = "helo";
 
 	return (
-		<div className="w-96 h-full border-r p-2 gap-2 flex flex-col items-center">
+		<div className="w-96 h-full container flex-col items-center">
 			<h1>CalcSideBar</h1>
 			<Select
 				label="Druh Turbíny"

@@ -22,14 +22,13 @@ model User {
 
 model Runner {
   name           String   @db.VarChar(255)
+  order          String   @db.VarChar(255)
   type           String   @db.VarChar(255)
   customer       String   @db.VarChar(255)
   Da             Int      @default(0)
   Ba             Int      @default(0)
   Z              Int      @default(0)
-  Ra             Int      @default(0)
   hourRate       Int      @default(0)
-  timeEstimate   Int      @default(0)
   hoursRealy     Int      @default(0)
   matIncluded    Boolean  @default(false)
   matSpec        String   @db.VarChar(255)
@@ -44,11 +43,11 @@ model Runner {
   balancingPrice Int      @default(0)
   testsPrice     Int      @default(0)
   priceTotal     Int      @default(0)
-  comment        String?  @db.VarChar(255)
-  attachment     String?  @db.VarChar(255)
+  comment        String?  @db.VarChar(255) 
+  attachment     Boolean  @default(false)
   createdAt      DateTime @default(now())
-  updatedAt      DateTime
-  id             Int      @id @default(autoincrement())
+  updatedAt      DateTime @default(now())
+  id             String   @id @default(uuid())
 }
 
 model Customer {
