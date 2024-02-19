@@ -21,7 +21,8 @@
 		"paths": {
 			"@/*": ["./*"],
 			"auth": ["./auth"],
-			"@bi": ["./node_modules/react-icons/bi"]
+			"@bi": ["./node_modules/react-icons/bi"],
+			"@components": ["./app/_components"],
 		}
 	},
 	"exclude": ["node_modules", ".next", "data"],
