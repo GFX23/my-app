@@ -1,4 +1,6 @@
-import { TextField, TextFieldVariants } from "@mui/material";
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { TextField, TextFieldProps, TextFieldVariants } from "@mui/material";
+import { UseFormRegister } from "react-hook-form";
 
 import { filledStyle } from "./inlineStyles";
 
@@ -7,6 +9,8 @@ type Props = {
 	variant?: TextFieldVariants | undefined;
 	required?: boolean;
 	type?: string;
+	register?: UseFormRegister<any>;
+	name?: string;
 };
 
 export enum InputTypes {
@@ -15,15 +19,43 @@ export enum InputTypes {
 	STANDARD = "standard",
 }
 
-export const Input: FP<Props> = ({
+/**
+ * @param label - label of the input
+ * @param type - default type is set to url
+ * @param register - register function from react-hook-form
+ * @param name - name of the input for react-hook-form
+ * @param variant - variant of the input InputTypes[FILLED | OUTLINED | STANDARD]
+ */
+export const Input: FP<Props & TextFieldProps> = ({
+	name,
 	label = "Zadej popisek",
 	type = "text",
+	register,
 	variant = InputTypes.FILLED,
+	...other
 }) => {
 	const InputProps = {
 		label,
 		type,
 		variant,
 	};
-	return <TextField {...InputProps} fullWidth sx={filledStyle} />;
+
+	let registerProps = {};
+
+	if (name && register) {
+		const { ref: inputRef, ...otherRegisterProps } = register(name);
+		registerProps = { inputRef, ...otherRegisterProps };
+	}
+
+	return (
+		<TextField
+		fullWidth
+		inputMode="url"
+		sx={filledStyle}
+		{...registerProps}
+		{...InputProps}
+		{...other}
+			
+		/>
+	);
 };
