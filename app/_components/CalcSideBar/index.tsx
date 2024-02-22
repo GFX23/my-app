@@ -8,32 +8,34 @@ import { Input } from "../Input";
 import { Select } from "../Select";
 import { Button } from "@/app/_components/Button";
 import { Slider } from "@/app/_components/Slider/Slider";
-import { useCalcStore } from "@/app/_store/CalcStore";
+import { Card } from "@/app/_containers/Card";
+import { RunnerCalcParams, useCalcStore } from "@/app/_store/CalcStore";
 import { THRESHOLD } from "@/config/settings";
 import { getRunnersForPricing } from "@/db/select";
 
 
-
-type FormProps = {
-	type: string;
-	Da: string;
-	Ba: string;
-	Z: string;
-	hourRate: string;
-	roughness: string;
-	allowance: string;
-	matPricePerKg: string;
-	daOffset: string;
-	baOffset: string;
-};
+// TODO - Figure out how to pass defaultValue to Slider and Select
 
 export const CalcSideBar = () => {
-	const [loading, setLoading] = useState(false);
+	const defParams = useCalcStore((state) => state.runnerCalcParams);
 	const setRunners = useCalcStore((state) => state.setRunners);
-	const { register, handleSubmit } = useForm<FormProps>(
-		{ defaultValues: { type: "pelton", allowance: "6", matPricePerKg: "6" } });
+	const [loading, setLoading] = useState(false);
+	
+	const { register, handleSubmit } = useForm<RunnerCalcParams>(
+		{ defaultValues: { 
+			type: defParams.type,
+			Da: defParams.Da,
+			Ba: defParams.Ba,
+			Z: defParams.Z,
+			hourRate: defParams.hourRate,
+			roughness: defParams.roughness,
+			allowance: defParams.allowance,
+			matPricePerKg: defParams.matPricePerKg,
+			DaOffset: defParams.DaOffset,
+			BaOffset: defParams.BaOffset,
+		 } });
 
-	const onSubmit: SubmitHandler<FormProps> = async (data) => {
+	const onSubmit: SubmitHandler<RunnerCalcParams> = async (data) => {
 		setLoading(true);
 		try {
 			const runnersR = await getRunnersForPricing(data);
@@ -57,13 +59,12 @@ export const CalcSideBar = () => {
 	};
 
 	return (
-		<div className="w-96 h-full container flex-col items-center">
-			<h1>CalcSideBar</h1>
-			<form onSubmit={handleSubmit(onSubmit)} className="p-4">
+		<Card label="SEARCH PARAMETERS" className="w-96">
+			<form onSubmit={handleSubmit(onSubmit)}>
 				<Select
-					label="Druh Turbíny"
+					label="Runner Type"
 					register={register}
-					defaultValue="pelton"
+					defaultValue={defParams.type}
 					name="type"
 					options={[
 						{ value: "pelton", label: "Pelton Runner" },
@@ -72,28 +73,27 @@ export const CalcSideBar = () => {
 						{ value: "turgo", label: "Turgo" },
 					]}
 				/>
-				<Input register={register} name="Da" label="Da"/>
-				<Input register={register} name="Ba" label="Ba" />
-				<Input register={register} name="Z" label="Z" />
-				<Input register={register} name="hourRate" label="Hour rate" defaultValue={85} />
+				<Input register={register} type="number" name="Da" label="Da"/>
+				<Input register={register} type="number" name="Ba" label="Ba"/>
+				<Input register={register} type="number" name="Z" label="Z"/>
+				<Input register={register} type="number" name="hourRate" label="Hour rate"/>
 				<Select
 					label="Demanded Roughness"
 					register={register}
 					name="roughness"
-					defaultValue="3.2"
+					defaultValue={defParams.roughness}
 					options={[
 						{ value: "0.8", label: "Ra 0.8" },
 						{ value: "1.6", label: "Ra 1.6" },
 						{ value: "3.2", label: "Ra 3.2" },
 					]}
 				/>
-				<Input register={register} name="allowance" label="Allowance" />
-				<Input register={register} name="matPricePerKg" label="Material - price per KG" />
-				<Slider min={0} max={250} register={register} name="daOffset" defaultValue={150} label="Da Offset" />
-				<Slider min={0} max={125} register={register} name="baOffset" defaultValue={50} label="Ba Offset" />
+				<Input register={register} type="number" name="allowance" label="Allowance" />
+				<Input register={register} type="number" name="matPricePerKg" label="Material - price per KG" />
+				<Slider min={0} max={250} register={register} name="DaOffset" defaultValue={defParams.DaOffset} label="Da Offset" />
+				<Slider min={0} max={125} register={register} name="BaOffset" defaultValue={defParams.BaOffset} label="Ba Offset" />
 				<Button type="submit" loading={loading}>Search for Runners</Button>
 			</form>
-		</div>
+		</Card>
 	);
 };
-

@@ -1,6 +1,7 @@
 "use server";
 
 import { prisma } from "../prisma/prisma";
+import { RunnerCalcParams } from "@/app/_store/CalcStore";
 
 export const getUser = async (email: string) =>
 	prisma.user.findUnique({
@@ -18,20 +19,13 @@ export const getAllRunners = async () => {
 	return runners;
 };
 
-type DataProps = {
-	type: string;
-	Da: string;
-	Ba: string;
-	daOffset: string;
-	baOffset: string;
-};
 
-export const getRunnersForPricing = async (data: DataProps) => {
+export const getRunnersForPricing = async (data: RunnerCalcParams) => {
 
-	const daMin = parseInt(data.Da, 10) - parseInt(data.daOffset, 10);
-	const daMax = parseInt(data.Da, 10) + parseInt(data.daOffset, 10);
-	const baMin = parseInt(data.Ba, 10) - parseInt(data.baOffset, 10);
-	const baMax = parseInt(data.Ba, 10) + parseInt(data.baOffset, 10);
+	const daMin = data.Da - data.DaOffset;
+	const daMax = data.Da + data.DaOffset;
+	const baMin = data.Ba - data.BaOffset;
+	const baMax = data.Ba + data.BaOffset;
 
 	const runners = await prisma.runner.findMany({
 		where: {
