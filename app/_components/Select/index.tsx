@@ -52,6 +52,7 @@ export const Select: FP<Props & TextFieldProps> = ({
 			{...registerProps}
 			{...other}
 			fullWidth
+			name={name}
 			defaultValue={defaultValue}
 			select
 			{...InputProps}

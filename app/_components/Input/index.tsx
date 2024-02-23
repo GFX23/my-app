@@ -52,6 +52,7 @@ export const Input: FP<Props & TextFieldProps> = ({
 		fullWidth
 		inputMode="url"
 		autoComplete="off"
+		name={name}
 		sx={filledStyle}
 		{...registerProps}
 		{...InputProps}
