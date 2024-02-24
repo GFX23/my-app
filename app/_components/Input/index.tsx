@@ -21,7 +21,7 @@ export enum InputTypes {
 
 /**
  * @param label - label of the input
- * @param type - default type is set to url
+ * @param type - default type is set to text
  * @param register - register function from react-hook-form
  * @param name - name of the input for react-hook-form
  * @param variant - variant of the input InputTypes[FILLED | OUTLINED | STANDARD]
@@ -34,30 +34,29 @@ export const Input: FP<Props & TextFieldProps> = ({
 	variant = InputTypes.FILLED,
 	...other
 }) => {
-	const InputProps = {
-		label,
-		type,
-		variant,
-	};
 
 	let registerProps = {};
 
 	if (name && register) {
-		const { ref: inputRef, ...otherRegisterProps } = register(name);
+		const { ref: inputRef, ...otherRegisterProps } = register(name, { valueAsNumber: (type === "number") });
 		registerProps = { inputRef, ...otherRegisterProps };
 	}
 
 	return (
 		<TextField
-		fullWidth
-		inputMode="url"
-		autoComplete="off"
-		name={name}
-		sx={filledStyle}
-		{...registerProps}
-		{...InputProps}
-		{...other}
-			
+			fullWidth
+			inputMode="url"
+			autoComplete="off"
+			label={label}
+			InputLabelProps={{
+        shrink: true,
+      }}
+			type={type}
+			variant={variant}
+			name={name}
+			sx={filledStyle}
+			{...registerProps}
+			{...other}
 		/>
 	);
 };

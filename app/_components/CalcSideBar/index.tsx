@@ -9,33 +9,26 @@ import { Select } from "../Select";
 import { Button } from "@/app/_components/Button";
 import { Slider } from "@/app/_components/Slider/Slider";
 import { Card } from "@/app/_containers/Card";
-import { RunnerCalcParams, useCalcStore } from "@/app/_store/CalcStore";
+import { useCalcStore } from "@/app/_store/CalculationStore/CalcStore";
+import { RunnerCalcParams } from "@/app/_store/CalculationStore/types";
 import { THRESHOLD } from "@/config/settings";
 import { getRunnersForPricing } from "@/db/select";
-
+import { calcPrices, calcParams } from "@/lib/calculator/calculate";
 
 // TODO - Figure out how to pass defaultValue to Slider and Select
 
 export const CalcSideBar = () => {
 	const defParams = useCalcStore((state) => state.runnerCalcParams);
 	const setRunners = useCalcStore((state) => state.setRunners);
+	const setRunnerCalcParams = useCalcStore((state) => state.setRunnerCalcParams);
+	const setCalculation = useCalcStore((state) => state.setCalculation);
 	const [loading, setLoading] = useState(false);
-	
-	const { register, handleSubmit } = useForm<RunnerCalcParams>(
-		{ defaultValues: { 
-			type: defParams.type,
-			Da: defParams.Da,
-			Ba: defParams.Ba,
-			Z: defParams.Z,
-			hourRate: defParams.hourRate,
-			roughness: defParams.roughness,
-			allowance: defParams.allowance,
-			matPricePerKg: defParams.matPricePerKg,
-			DaOffset: defParams.DaOffset,
-			BaOffset: defParams.BaOffset,
-		 } });
+
+	const { register, handleSubmit } = useForm<RunnerCalcParams>({ defaultValues: { ...defParams } });
 
 	const onSubmit: SubmitHandler<RunnerCalcParams> = async (data) => {
+		console.debug("form on sideBar", data);
+
 		setLoading(true);
 		try {
 			const runnersR = await getRunnersForPricing(data);
@@ -47,6 +40,8 @@ export const CalcSideBar = () => {
 			}
 			console.debug("form on sideBar", runnersR);
 			setRunners(runnersR);
+			setRunnerCalcParams(data);
+			setCalculation({ ...calcPrices(runnersR), ...calcParams(data) });
 		} catch (e) {
 			toast.error("Error while fetching runners");
 			console.error(e);
@@ -55,7 +50,6 @@ export const CalcSideBar = () => {
 				setLoading(false);
 			}, THRESHOLD);
 		}
-
 	};
 
 	return (
@@ -73,10 +67,10 @@ export const CalcSideBar = () => {
 						{ value: "turgo", label: "Turgo" },
 					]}
 				/>
-				<Input register={register} type="number" name="Da" label="Da"/>
-				<Input register={register} type="number" name="Ba" label="Ba"/>
-				<Input register={register} type="number" name="Z" label="Z"/>
-				<Input register={register} type="number" name="hourRate" label="Hour rate"/>
+				<Input register={register} type="number" name="Da" label="Da" />
+				<Input register={register} type="number" name="Ba" label="Ba" />
+				<Input register={register} type="number" name="Z" label="Z" />
+				<Input register={register} type="number" name="hourRate" label="Hour rate" />
 				<Select
 					label="Demanded Roughness"
 					register={register}
@@ -89,10 +83,31 @@ export const CalcSideBar = () => {
 					]}
 				/>
 				<Input register={register} type="number" name="allowance" label="Allowance" />
-				<Input register={register} type="number" name="matPricePerKg" label="Material - price per KG" />
-				<Slider min={0} max={250} register={register} name="DaOffset" defaultValue={defParams.DaOffset} label="Da Offset" />
-				<Slider min={0} max={125} register={register} name="BaOffset" defaultValue={defParams.BaOffset} label="Ba Offset" />
-				<Button type="submit" loading={loading}>Search for Runners</Button>
+				<Input
+					register={register}
+					type="number"
+					name="matPricePerKg"
+					label="Material - price per KG"
+				/>
+				<Slider
+					min={0}
+					max={250}
+					register={register}
+					name="DaOffset"
+					defaultValue={defParams.DaOffset}
+					label="Da Offset"
+				/>
+				<Slider
+					min={0}
+					max={125}
+					register={register}
+					name="BaOffset"
+					defaultValue={defParams.BaOffset}
+					label="Ba Offset"
+				/>
+				<Button type="submit" loading={loading}>
+					Search for Runners
+				</Button>
 			</form>
 		</Card>
 	);

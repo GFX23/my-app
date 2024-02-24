@@ -1,27 +1,19 @@
 "use client";
 
 import { useState } from "react";
+import { SubmitHandler, useForm } from "react-hook-form";
 
 import { Checkbox } from "@/app/_components/Checkbox";
 import { Input } from "@/app/_components/Input";
 import { Select } from "@/app/_components/Select";
 import { Card } from "@/app/_containers/Card";
-import { useCalcStore } from "@/app/_store/CalcStore";
-import { RunnerTypes } from "@/db/types";
-
-
-type Props = {
-	name?: string;
-	Da?: number;
-	Ba?: number;
-	Z?: number;
-	machiningHours?: number;
-};
+import { useCalcStore } from "@/app/_store/CalculationStore/CalcStore";
+import { RunnerNames, RunnerNamesEnum } from "@/app/_store/CalculationStore/types";
 
 type RunnerParams = {
 	name: string;
 	order: string;
-	type: RunnerTypes;
+	type: RunnerNames;
 	Da: number;
 	Ba: number;
 	Z: number;
@@ -36,95 +28,108 @@ type RunnerParams = {
 	balancingPrice: number;
 	testsPrice: number;
 	otherPrice: number;
-	machiningPrice: number;
+	millingPrice: number;
 	materialIncluded: boolean;
 	matPrice: number;
 	priceTotal: number;
 	comment: string;
 };
 
-export const RunnerCard: FP<Props> = ({ Da = 0, Ba = 0, Z = 0 }) => {
-	const [runnerParams, setRunnerParams] = useState<RunnerParams>({
-		name: "",
-		order: "",
-		type: "pelton",
-		Da: 0,
-		Ba: 0,
-		Z: 0,
-		customer: "",
-		dimensions: "",
-		material: "",
-		matWeight: 0,
-		machiningHours: 0,
-		lathePrice: 0,
-		edmPrice: 0,
-		grindingPrice: 0,
-		balancingPrice: 0,
-		testsPrice: 0,
-		otherPrice: 0,
-		machiningPrice: 0,
-		materialIncluded: false,
-		matPrice: 0,
-		priceTotal: 0,
-		comment: "",
+export const RunnerCard: FC = () => {
+	const calculatedPrice = useCalcStore((state) => state.calculation);
+	const {
+		millingPrice,
+		testsPrice,
+		balancingPrice,
+		edmPrice,
+		grindingPrice,
+		lathePrice,
+	} = calculatedPrice;
+	const runnerCalcParams = useCalcStore((state) => state.runnerCalcParams);
+	const dimensions = `[ Da: ${runnerCalcParams.Da} | Ba: ${runnerCalcParams.Ba} | Z: ${runnerCalcParams.Z} ]`;
+	const { register, handleSubmit } = useForm<RunnerParams>({
+		values: {
+			material: "X3CrNiMo",
+			materialIncluded: false,
+			comment: "",
+			name: "",
+			order: "",
+			customer: "",
+			otherPrice: 0,
+			...calculatedPrice,
+			...runnerCalcParams,
+			dimensions,
+			type: RunnerNamesEnum[runnerCalcParams.type],
+			priceTotal:
+				millingPrice + testsPrice + balancingPrice + edmPrice + grindingPrice + lathePrice,
+		},
 	});
+
 	const [loading, setLoading] = useState(false);
-	const defParams = useCalcStore((state) => state.runnerCalcParams);
 
-	const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-		console.log(e.target.name, e.target.value);
-		setRunnerParams({ ...runnerParams, [e.target.name]: e.target.value });
-		console.log(runnerParams);
+	const onSubmit: SubmitHandler<RunnerParams> = (data) => {
+		console.debug(data);
 	};
-
-	const dimensions = `[ Da: ${runnerParams.Da} | Ba: ${runnerParams.Ba} | Z: ${runnerParams.Z} ]`;
 
 	return (
 		<Card label="CREATE RUNNER">
-			<form className="flex flex-col gap-2">
+			<form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-2">
 				<div className="flex gap-2">
 					<Card label="BIO OF THE RUNNER">
-						<Input label="Name" value={runnerParams.name} name="name" onChange={handleChange} />
-						<Input label="Order" value={runnerParams.order} name="order" onChange={handleChange} />
-						<Input label="Runner Type" value={runnerParams.type} />
-						<Input label="Customer" value={runnerParams.customer} name="customer" onChange={handleChange} />
-						<Input label="Dimensions" value={dimensions} />
-						<Select label="Material" 				
+						<Input label="Name" register={register} name="name" />
+						<Input label="Order" register={register} name="order" />
+						<Input label="Runner Type" register={register} name="type" />
+						<Input label="Customer" register={register} name="customer" />
+						<Input label="Dimensions" register={register} name="dimensions" />
+						<Select
+							label="Material"
 							options={[
-							{ value: "X3CrNiMo", label: "X3CrNiMo" },
-							{ value: "X4CrNiMo", label: "X4CrNiMo" },
-							{ value: "Duplex", label: "Duplex" },
-							{ value: "SuperDuplex", label: "Super Duplex" },
-						]}
+								{ value: "X3CrNiMo", label: "X3CrNiMo" },
+								{ value: "X4CrNiMo", label: "X4CrNiMo" },
+								{ value: "Duplex", label: "Duplex" },
+								{ value: "SuperDuplex", label: "Super Duplex" },
+							]}
+							defaultValue="X3CrNiMo"
 							name="material"
-							value={runnerParams.material}
-							onChange={handleChange}
+							register={register}
 						/>
-						<Input label="Material Weight" value={runnerParams.matWeight} />
+						<Input label="Material Weight" register={register} name="matWeight" />
 					</Card>
 					<Card label="PRICING DETAILS">
-						<Input label="Machining Hours" value={runnerParams.machiningHours} name="machiningHours" onChange={handleChange} />
-						<Input label="Lathe Price" value={runnerParams.lathePrice} name="lathePrice" onChange={handleChange}  />
-						<Input label="EDM Price" value={runnerParams.edmPrice} name="edmPrice" onChange={handleChange} />
-						<Input label="Grinding Price" value={runnerParams.grindingPrice} name="grindingPrice" onChange={handleChange} />
-						<Input label="Balancing Price" value={runnerParams.balancingPrice} name="balancingPrice" onChange={handleChange} />
-						<Input label="Tests Price" value={runnerParams.testsPrice} name="testsPrice" onChange={handleChange} />
-						<Input label="Other Expenses" value={runnerParams.otherPrice} name="otherPrice" onChange={handleChange} />
+						<Input
+							label="Machining Hours"
+							type="number"
+							register={register}
+							name="machiningHours"
+						/>
+						<Input
+							label="Machining Price"
+							register={register}
+							name="millingPrice"
+							type="number"
+						/>
+						<Input label="Lathe Price" type="number" register={register} name="lathePrice" />
+						<Input label="EDM Price" type="number" register={register} name="edmPrice" />
+						<Input label="Grinding Price" type="number" register={register} name="grindingPrice" />
+						<Input
+							label="Balancing Price"
+							type="number"
+							register={register}
+							name="balancingPrice"
+						/>
+						<Input label="Tests Price" type="number" register={register} name="testsPrice" />
 					</Card>
-					<Card label="DRAWINGS ETC.">
-						DRAWINGS ETC.
-					</Card>
+					<Card label="DRAWINGS ETC.">DRAWINGS ETC.</Card>
 				</div>
 				<div className="flex gap-2">
-
 					<Card label="FINAL PRICING">
-						<Input label="Machining Price" type="number" value={runnerParams.machiningPrice} />
-						<Checkbox label="Material Included" />
-						<Input label="Material Price" type="number" value={runnerParams.matPrice} />
-						<Input label="Price total" type="number" value={runnerParams.priceTotal} />
+						<Input label="Other Expenses" type="number" register={register} name="otherPrice" />
+						<Checkbox label="Material Included" name="matIncluded" register={register} />
+						<Input label="Material Price" type="number" register={register} name="matPrice" />
+						<Input label="Price total" type="number" register={register} name="priceTotal" />
 					</Card>
 					<Card label="Comment">
-						<Input label="Comment" type="text" />
+						<Input label="Comment" multiline register={register} name="comment" />
 					</Card>
 				</div>
 			</form>

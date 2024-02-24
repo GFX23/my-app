@@ -1,7 +1,7 @@
 "use server";
 
 import { prisma } from "../prisma/prisma";
-import { RunnerCalcParams } from "@/app/_store/CalcStore";
+import { RunnerCalcParams } from "@/app/_store/CalculationStore/CalcStore";
 
 export const getUser = async (email: string) =>
 	prisma.user.findUnique({
@@ -19,9 +19,7 @@ export const getAllRunners = async () => {
 	return runners;
 };
 
-
 export const getRunnersForPricing = async (data: RunnerCalcParams) => {
-
 	const daMin = data.Da - data.DaOffset;
 	const daMax = data.Da + data.DaOffset;
 	const baMin = data.Ba - data.BaOffset;

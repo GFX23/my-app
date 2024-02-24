@@ -5,7 +5,7 @@ import { useState } from "react";
 import { toast } from "react-toastify";
 
 import { CrossButton } from "../Button/CrossButton";
-import { useCalcStore } from "@/app/_store/CalcStore";
+import { useCalcStore } from "@/app/_store/CalculationStore/CalcStore";
 import { THRESHOLD } from "@/config/settings";
 import { deleteRunner } from "@/db/delete";
 
@@ -13,9 +13,7 @@ type Props = {
 	runner: Runner;
 };
 
-export const RunnerItem: FP<Props> = ({
-	runner: { name, Da, Ba, Z, id, machiningHours },
-}) => {
+export const RunnerItem: FP<Props> = ({ runner: { name, Da, Ba, Z, id, machiningHours } }) => {
 	const [loading, setLoading] = useState(false);
 	const setRunners = useCalcStore((state) => state.setRunners);
 	const runners = useCalcStore((state) => state.runners);

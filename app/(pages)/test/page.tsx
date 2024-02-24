@@ -4,7 +4,7 @@ import { NextPage } from "next";
 import React from "react";
 
 import { Input } from "@/app/_components/Input";
-// import { fillDB } from "@/db/fill/fill";
+// import { fillDB } from "@/data/fill/fillDB";
 
 const TestPage: NextPage = () => {
 	// const handleClick = async () => {
