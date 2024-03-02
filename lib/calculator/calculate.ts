@@ -49,6 +49,7 @@ export const calcPrices = (runners: Runner[]) => {
   return averages;
 };
 
+
 export const calcParams = (data: RunnerCalcParams) => {
  const { Da, Ba, allowance, matDensity } = data;
 
