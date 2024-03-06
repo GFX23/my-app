@@ -1,4 +1,4 @@
-## MY APP PROJECT
+## PERSONAL WEBSITE PROJECT
 
 - eslint + prettier setup acc to airbnb, eslint-typescript, 80 char per line, 2 tabs etc. || "npm run lint" for linting
 
@@ -7,3 +7,5 @@
 - prisma commands:
   prisma generate - after changing schema
   prisma db push - to push schema into DB
+
+## CALCULATOR PART
