@@ -71,7 +71,7 @@ module.exports = {
 		"@typescript-eslint/quotes": ["error", "double"],
 		semi: ["error", "always"],
 	},
-	ignorePatterns: [".eslintrc.js", "node_modules/"],
+	ignorePatterns: [".eslintrc.js", "node_modules/", "dist/", "build/", ".next/"],
 	overrides: [
 		{
 			// COMMENT - nextjs app dir special components must have default export
