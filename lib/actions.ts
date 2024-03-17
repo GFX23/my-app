@@ -7,7 +7,7 @@ import { signIn } from "auth";
 
 export async function authenticate(data: { email: string; password: string }) {
 	try {
-		const res = await signIn("credentials", data);
+		const res = await signIn("credentials", { ...data, redirect: false });
 		return "Success!";
 	} catch (error) {
 		if (error instanceof AuthError) {

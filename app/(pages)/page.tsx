@@ -2,17 +2,17 @@ import { NextPage } from "next";
 import React from "react";
 
 const Home: NextPage = () => (
-	<>
+	<div className="flex flex-col gap-20">
 		<header>
-			<h1>Your Name</h1>
-			<p>Front End Developer</p>
+			<h1>GFX23</h1>
+			<p>Next.js Dev</p>
 		</header>
 
-		<section id="about-me">
+		<section id="about-me" className="flex flex-col gap-4">
 			<h2>About Me</h2>
 			<p>
-				Hi, Im [Your Name], a passionate front-end developer with three years of experience. My
-				expertise lies in Next.js, Postgres, React, and TypeScript. I enjoy building interactive and
+				Hi, Im Tomas, a passionate front-end developer with three years of experience. My expertise
+				lies in Next.js, Postgres, React, and TypeScript. I enjoy building interactive and
 				user-friendly web applications that deliver a seamless user experience.
 			</p>
 
@@ -30,9 +30,9 @@ const Home: NextPage = () => (
 		</section>
 
 		<footer>
-			<p>Contact me at: your.email@example.com</p>
+			<p>Contact me at: tomas.spacil@tsindustry.cz</p>
 		</footer>
-	</>
+	</div>
 );
 
 export default Home;

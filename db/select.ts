@@ -1,7 +1,7 @@
 "use server";
 
 import { prisma } from "../prisma/prisma";
-import { RunnerCalcParams } from "@/app/_store/CalculationStore/CalcStore";
+import { RunnerCalcParams } from "@/app/_store/CalculationStore/types";
 
 export const getUser = async (email: string) =>
 	prisma.user.findUnique({

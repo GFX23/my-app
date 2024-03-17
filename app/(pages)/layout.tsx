@@ -6,7 +6,6 @@ import { ToastContainer } from "react-toastify";
 import { Navbar } from "../_components/Navigation/Navbar";
 import { SideTitle } from "../_components/Navigation/SideTitle";
 
-
 export const metadata: Metadata = {
 	title: "Welcome to GFX23's personal website",
 	description: "Made with Next.js 14, TailwindCSS and TypeScript",
@@ -24,7 +23,7 @@ const RootLayout = async ({
 				<SideTitle />
 				{children}
 			</div>
-			<ToastContainer />
+			<ToastContainer theme="colored" />
 		</body>
 	</html>
 );

@@ -4,9 +4,8 @@ import React from "react";
 import { LoginForm } from "@/app/_components/LoginForm";
 
 const Login: NextPage = async () => (
-	<div>
-		<h1>Login Page</h1>
-		<p>This is a basic Login page.</p>
+	<div className="flex flex-col items-center justify-center w-full">
+		<h2>Login Page</h2>
 		<LoginForm />
 	</div>
 );

@@ -15,23 +15,23 @@
 		"incremental": true,
 		"plugins": [
 			{
-				"name": "next"
-			}
+				"name": "next",
+			},
 		],
 		"paths": {
 			"@/*": ["./*"],
 			"auth": ["./auth"],
 			"@bi": ["./node_modules/react-icons/bi"],
 			"@components": ["./app/_components"],
-		}
+		},
 	},
-	"exclude": ["node_modules", ".next", "data"],
+	"exclude": ["node_modules", ".next"],
 	"include": [
 		"next-env.d.ts",
 		"**/*.ts",
 		"**/*.tsx",
 		".next/types/**/*.ts",
 		"**/*.js",
-		"node_modules/prisma/*"
-	]
+		"node_modules/prisma/*",
+	],
 }

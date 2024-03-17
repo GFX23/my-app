@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 
+import { Button } from "../Button";
 import { Checkbox } from "@/app/_components/Checkbox";
 import { Input } from "@/app/_components/Input";
 import { Select } from "@/app/_components/Select";
@@ -37,14 +38,8 @@ type RunnerParams = {
 
 export const RunnerCard: FC = () => {
 	const calculatedPrice = useCalcStore((state) => state.calculation);
-	const {
-		millingPrice,
-		testsPrice,
-		balancingPrice,
-		edmPrice,
-		grindingPrice,
-		lathePrice,
-	} = calculatedPrice;
+	const { millingPrice, testsPrice, balancingPrice, edmPrice, grindingPrice, lathePrice } =
+		calculatedPrice;
 	const runnerCalcParams = useCalcStore((state) => state.runnerCalcParams);
 	const dimensions = `[ Da: ${runnerCalcParams.Da} | Ba: ${runnerCalcParams.Ba} | Z: ${runnerCalcParams.Z} ]`;
 	const { register, handleSubmit } = useForm<RunnerParams>({
@@ -68,7 +63,11 @@ export const RunnerCard: FC = () => {
 	const [loading, setLoading] = useState(false);
 
 	const onSubmit: SubmitHandler<RunnerParams> = (data) => {
+		setLoading(true);
 		console.debug(data);
+		setTimeout(() => {
+			setLoading(false);
+		}, 1000);
 	};
 
 	return (
@@ -102,12 +101,7 @@ export const RunnerCard: FC = () => {
 							register={register}
 							name="machiningHours"
 						/>
-						<Input
-							label="Machining Price"
-							register={register}
-							name="millingPrice"
-							type="number"
-						/>
+						<Input label="Machining Price" register={register} name="millingPrice" type="number" />
 						<Input label="Lathe Price" type="number" register={register} name="lathePrice" />
 						<Input label="EDM Price" type="number" register={register} name="edmPrice" />
 						<Input label="Grinding Price" type="number" register={register} name="grindingPrice" />
@@ -124,13 +118,14 @@ export const RunnerCard: FC = () => {
 				<div className="flex gap-2">
 					<Card label="FINAL PRICING">
 						<Input label="Other Expenses" type="number" register={register} name="otherPrice" />
-						<Checkbox label="Material Included" name="matIncluded" register={register} />
+						<Checkbox label="Material Included" name="matIncluded" /> { /* ADD REGISTER */}
 						<Input label="Material Price" type="number" register={register} name="matPrice" />
 						<Input label="Price total" type="number" register={register} name="priceTotal" />
 					</Card>
 					<Card label="Comment">
 						<Input label="Comment" multiline register={register} name="comment" />
 					</Card>
+					<Button loading={loading} label="Create Runner" type="submit" />
 				</div>
 			</form>
 		</Card>

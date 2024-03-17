@@ -3,13 +3,20 @@
 import { Loader } from "@/app/_components/Loader";
 
 type Props = {
-	children: React.ReactNode;
+	children?: React.ReactNode;
 	onClick?: () => void;
 	type?: "button" | "submit" | "reset";
 	loading?: boolean;
+	label?: string;
 };
 
-export const Button: FP<Props> = ({ children, onClick, type = "button", loading = false }) => {
+export const Button: FP<Props> = ({
+	children,
+	onClick,
+	type = "button",
+	loading = false,
+	label,
+}) => {
 	const buttonProps = {
 		className: "border-[1px]",
 	};
@@ -22,6 +29,7 @@ export const Button: FP<Props> = ({ children, onClick, type = "button", loading 
 		>
 			{loading ? <Loader /> : null}
 			{children}
+			{label}
 		</button>
 	);
 };

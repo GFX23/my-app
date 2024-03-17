@@ -7,7 +7,12 @@ type Props = {
 	label?: string;
 };
 
-export const Slider: FP<Props & SliderProps> = ({ label = "Zadej popisek", register, name, ...props }) => {
+export const Slider: FP<Props & SliderProps> = ({
+	label = "Zadej popisek",
+	register,
+	name,
+	...props
+}) => {
 	let registerProps = {};
 
 	if (name && register) {
@@ -17,8 +22,8 @@ export const Slider: FP<Props & SliderProps> = ({ label = "Zadej popisek", regis
 
 	return (
 		<div className="px-3">
-      <span>{label}</span>
-			<Slidr size="small" {...registerProps} valueLabelDisplay="auto"  {...props} />
+			<span>{label}</span>
+			<Slidr size="small" {...registerProps} valueLabelDisplay="auto" {...props} />
 		</div>
 	);
 };

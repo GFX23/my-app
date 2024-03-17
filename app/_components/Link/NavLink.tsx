@@ -17,8 +17,8 @@ export const NavLink: React.FC<NavLinkProps> = ({ href, label, icon }) => {
 		<Link href={href}>
 			<div
 				className={cn(
-					"flex flex-row text-primary-5 cursor-pointer hover:text-primary-3",
-					pathName === href && "border-b-[1px] text-primary-3",
+					"flex flex-row whitespace-nowrap cursor-pointer hover:text-primary-3",
+					pathName === href ? "border-b-[1px] text-primary-3" : "text-primary-5",
 				)}
 			>
 				{icon}

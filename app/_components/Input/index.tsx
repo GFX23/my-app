@@ -11,6 +11,7 @@ type Props = {
 	type?: string;
 	register?: UseFormRegister<any>;
 	name?: string;
+	error?: string;
 };
 
 export enum InputTypes {
@@ -26,20 +27,22 @@ export enum InputTypes {
  * @param name - name of the input for react-hook-form
  * @param variant - variant of the input InputTypes[FILLED | OUTLINED | STANDARD]
  */
-export const Input: FP<Props & TextFieldProps> = ({
+export const Input: FP<Props & Omit<TextFieldProps, "error">> = ({
 	name,
 	label = "Zadej popisek",
 	type = "text",
 	register,
 	variant = InputTypes.FILLED,
+	error,
 	...other
 }) => {
-
 	let registerProps = {};
 
 	if (name && register) {
-		const { ref: inputRef, ...otherRegisterProps } = register(name, { valueAsNumber: (type === "number") });
-		registerProps = { inputRef, ...otherRegisterProps };
+		const { ref: inputRef, ...otherRegisterProps } = register(name, {
+			valueAsNumber: type === "number",
+		});
+		registerProps = { inputRef, ...otherRegisterProps, helperText: error };
 	}
 
 	return (
@@ -49,8 +52,9 @@ export const Input: FP<Props & TextFieldProps> = ({
 			autoComplete="off"
 			label={label}
 			InputLabelProps={{
-        shrink: true,
-      }}
+				shrink: true,
+			}}
+			error={!!error}
 			type={type}
 			variant={variant}
 			name={name}
