@@ -30,6 +30,7 @@ export const useCalcStore = create<CalcStore>()((set) => ({
 		lathePrice: 0,
 		matWeight: 0,
 		matPrice: 0,
+		priceTotal: 0,
 	},
 	setRunners: (runners: Runner[]) => set({ runners }),
 	setRunnerCalcParams: (runnerCalcParams: RunnerCalcParams) => set({ runnerCalcParams }),
