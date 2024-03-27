@@ -35,6 +35,9 @@ const config: Config = {
 					2: "#EF4444",
 					3: "#B91C1C",
 				},
+				mui: {
+					text: "#808080",
+				},
 			},
 		},
 	},
