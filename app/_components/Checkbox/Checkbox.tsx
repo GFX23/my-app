@@ -1,13 +1,26 @@
-import { Checkbox as Check, FormControlLabel } from "@mui/material";
+/* eslint-disable @typescript-eslint/no-explicit-any */
+
+import { UseFormRegister } from "react-hook-form";
 
 type Props = {
+	register?: UseFormRegister<any>;
 	label: string;
+	name?: string;
 };
 
-type MuiCheckboxProps = React.ComponentProps<typeof Check> & Props;
+export const Checkbox: FP<Props> = ({ label = "Zadej popisek", register, name }) => {
+	let registerProps = {};
 
-export const Checkbox: FP<MuiCheckboxProps> = ({ label = "Zadej popisek" }) => (
-	<div className="flex gap-4 w-96">
-		<FormControlLabel label={label} labelPlacement="start" control={<Check />} />
-	</div>
-);
+	if (name && register) {
+		registerProps = register(name, {
+		});
+	}
+
+	return (
+		<div className="flex flex-col gap-2 w-96">
+			<label htmlFor="checkbox" className="text-xs ml-2 text-mui-text">{label}</label>
+			<input {...registerProps} className="w-5 h-5 ml-2" id="checkbox" type="checkbox" />
+		</div>
+	);
+};
+
