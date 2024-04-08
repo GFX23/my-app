@@ -9,15 +9,6 @@ export type RunnerNames =
 	| "Impeller";
 export type Roughness = "3.2" | "1.6" | "0.8" | "0.4";
 
-export type CalcStore = {
-	runners: Runner[];
-	runnerCalcParams: RunnerCalcParams;
-	calculation: Calculation;
-	setRunners: (runners: Runner[]) => void;
-	setRunnerCalcParams: (runnerCalcParams: RunnerCalcParams) => void;
-	setCalculation: (calculation: Calculation) => void;
-};
-
 export enum RunnerTypesEnum {
 	Peltonka = "pelton",
 	Franciska = "francis",
@@ -32,6 +23,34 @@ export enum RunnerNamesEnum {
 	turgo = "Turgo",
 	impeller = "Impeller",
 }
+
+export enum MaterialTypesEnum {
+	X3CrNiMo = "X3CrNiMo",
+	X4CrNiMo = "X4CrNiMo",
+	Duplex = "Duplex",
+	SuperDuplex = "SuperDuplex",
+}
+
+export type CalcStore = {
+	runners: Runner[];
+	runnerCalcParams: RunnerCalcParams;
+	calculation: Calculation;
+	setRunners: (runners: Runner[]) => void;
+	setRunnerCalcParams: (runnerCalcParams: RunnerCalcParams) => void;
+	setCalculation: (calculation: Calculation) => void;
+};
+
+
+
+export const RUNNER_TYPES_OPTIONS = Object.entries(RunnerNamesEnum).map(([key, value]: [string, string]) => ({
+	label: value,
+	value: key,
+}));
+
+export const MATERIAL_OPTIONS = Object.entries(MaterialTypesEnum).map(([key, value]: [string, string]) => ({
+	label: value,
+	value: key,
+}));
 
 export type RunnerCalcParams = {
 	type: RunnerTypes;
@@ -57,4 +76,5 @@ export type Calculation = {
 	lathePrice: number;
 	matWeight: number;
 	matPrice: number;
+	priceTotal: number;
 };
