@@ -9,6 +9,6 @@ const MainLayout = async ({
 	children,
 }: Readonly<{
 	children: React.ReactNode;
-}>) => <div className="">{children}</div>;
+}>) => <div className="bg-white w-full">{children}</div>;
 
 export default MainLayout;
